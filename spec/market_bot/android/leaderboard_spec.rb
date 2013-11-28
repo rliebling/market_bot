@@ -16,14 +16,14 @@ def stub_hydra(hydra)
     start = i * 24
     response = Typhoeus::Response.new(:code => 200, :headers => '', :body => test_src_pages[i + 1])
     url = "https://play.google.com/store/apps/category/ARCADE/collection/topselling_paid?start=#{start}&num=24&hl=en"
-    hydra.stub(:get, url).and_return(response)
+    Typhoeus.stub(url).and_return(response)
   end
 
   test_src_editors_choice = read_file(File.dirname(__FILE__), 'data', "leaderboard-apps_editors_choice.txt")
 
   response = Typhoeus::Response.new(:code => 200, :headers => '', :body => test_src_editors_choice)
-  url = "https://play.google.com/store/apps/collection/editors_choice?hl=en"
-  hydra.stub(:get, url).and_return(response)
+  url = "https://play.google.com/store/apps/collection/editors_choice?&hl=en"
+  Typhoeus.stub(url).and_return(response)
 end
 
 def check_results(results)

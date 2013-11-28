@@ -167,7 +167,7 @@ describe 'App' do
     context 'Quick API' do
       app = App.new(test_id)
       hydra = Typhoeus::Hydra.hydra
-      hydra.stub(:get, app.market_url).and_return(response)
+      Typhoeus.stub(app.market_url).and_return(response)
 
       app.update
       check_getters(app)
@@ -176,7 +176,7 @@ describe 'App' do
     context 'Batch API' do
       hydra = Typhoeus::Hydra.new
       app = App.new(test_id, :hydra => hydra)
-      hydra.stub(:get, app.market_url).and_return(response)
+      Typhoeus.stub(app.market_url).and_return(response)
 
       callback_flag = false
 
@@ -197,7 +197,7 @@ describe 'App' do
       hydra = Typhoeus::Hydra.new
       app = App.new(test_id, :hydra => hydra)
       response = Typhoeus::Response.new(:code => 200, :headers => '', :body => 'some broken app page')
-      hydra.stub(:get, app.market_url).and_return(response)
+      Typhoeus.stub(app.market_url).and_return(response)
 
       callback_flag = false
       error = nil
